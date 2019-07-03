@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)https://proyecto-firebase-58814.firebaseapp.com/chat.html?uno= -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Bootstrap CSS -->
+    
+    <link rel="stylesheet" type="text/css" href="page.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <title>chat</title>
+
+</head>
+<body>
+    <h1>WAZZUP!!!</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-">
+
+        </div>
+        <div class="col">
+          <div>
+            <div id="tabla1">    
+              <table class="table table-striped table-dark">
+                <thead>
+                  <tr>
+                    <td colspan="4" style="text-align: center;">BIENVENIDOS AL CHAT DE TÓPICOS ESPECIALES</td>
+                  </tr>
+               </thead>
+                 <tbody id="tabla">
+                 
+               </tbody>
+               </table>
+         </div><br>
+
+      <div class="container">
+          <div class="row">
+            <div class="col">
+               <div class="message">
+                <input type="text" required="" id="mensaje" placeholder="Escribe">
+              </div>
+            </div>
+
+            <div class="col-xl-">
+                <button type="button" id="enviar" class="btn btn-primary btn-block btn-large">ENVIAR</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-">
+
+  </div>
+</div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-database.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBw_3Ifj9JhGqOgufAtN2cBnsbPLG4QFKA",
+      authDomain: "chatprueba-86d79.firebaseapp.com",
+      databaseURL: "https://chatprueba-86d79.firebaseio.com",
+      projectId: "chatprueba-86d79",
+      storageBucket: "",
+      messagingSenderId: "510343292218",
+      appId: "1:510343292218:web:6942c80a84388f41"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+
+
+
+  <script type="text/javascript">
+     //obtener datos pasados por la url de javascript
+   function getGET(){
+   var loc = document.location.href;
+   var getString = loc.split('?')[1];
+   var GET = getString.split('&');
+   var get = {};
+
+   for(var i = 0, l = GET.length; i < l; i++){
+      var tmp = GET[i].split('=');
+      get[tmp[0]] = unescape(decodeURI(tmp[1]));
+   }
+   return get['dato'];
+}
+  </script>
+
+  <script>
+    var db= firebase.database();
+    var nombreUsu= getGET();
+
+    $(document).ready(function(){
+      db.ref('mensaje').on('child_added', function(data){
+        $('#tabla').append('<tr><td id="nombre">'+data.val().usuario+'</td><td id="mensajes">'+data.val().mensaje+'</td></tr>');
+      });
+    });
+
+    $('#enviar').on('click',function(){
+      var mensa = $('#mensaje').val();
+      db.ref('mensaje').push({
+        usuario:nombreUsu,
+        mensaje:mensa
+      });
+      $('#mensaje').val('');
+    });
+  </script>
+
+
+
+
+
+
+
+
+</body>
+</html>
